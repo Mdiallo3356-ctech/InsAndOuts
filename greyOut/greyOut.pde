@@ -1,5 +1,5 @@
 // Press Mouse to either grey out or bring back color
-
+// Mamadou Diallo
 int amount = 0; 
 boolean grey = false;
 color [] colorGenerator = new color[10];
