@@ -1,7 +1,7 @@
 color birdieWingB = color(46,57,231);
 color birdieWingG = color(249,166,2);
 color ground = 0;
-
+int birdX = 0;
 void setup() {
   size(500,500);
   
@@ -19,7 +19,7 @@ void draw() {
   //Birdie Start
   fill(birdieWingB);
   noStroke();
-  circle(442,157,35);
+  circle(442+birdX,157,35);
   //Eye
   fill(0);
   circle(452,157,6);
