@@ -15,15 +15,16 @@ int blue;
 
 //Tap Tap stuff
 boolean gameRunning = false;
+boolean gameEnd = false;
 int score = 0;
+int highScore = 0;
 boolean targetMade = false;
 int radius;
 int targetX;
 int targetY;
-int begin;
-int duration = 30;
-int time = 30;
-
+float begin;
+float duration = 10;
+float time = 30;
 
 void setup()
 {
@@ -355,26 +356,37 @@ void UI()
 
 void game()
 {
-  if(!gameRunning)
+  if(!gameRunning && !gameEnd)
   {
    textSize(45);
-   text("Press S to start game",0,250);
+   text("Press S to start game",20,250);
+   
+   textSize(20);
+   text("Press Q to quit", 200,400); 
    if(keyPressed && key == 's')
    {
      begin = millis();
     gameRunning = true; 
    }
+   if(keyPressed && key == 'q')
+   {
+   state = "select";
+   }
   }
-  if(gameRunning)
+  if(gameRunning && !gameEnd)
   {
     if(time > 0)
     {
      time = duration - (millis() - begin)/1000;
      textSize(70);
-     text(time,250,490);
+     text(time,130,495);
+    }
+    if(time <= 0)
+    {
+     gameEnd = true;
     }
   textSize(50);
-  text(score, 240,50);
+  text(score, 250,50);
   if(!targetMade)
   {
    makeNew(); 
@@ -391,9 +403,18 @@ void game()
   {
      if(key == 'q')
      {
-      state = "select";
+       score = 0;
+       time = 20;
+       duration = 10;
+       gameEnd = false;
+       gameRunning = false;
+       state = "select";
      }
   }
+  }
+  if(gameEnd)
+  {
+    gameEnd();
   }
 }
 
@@ -409,6 +430,48 @@ void makeNew()
 void makeCircleTarget(int x, int y,int r)
 {
  circle(x,y,r); 
+}
+
+void gameEnd()
+{
+  background(200);
+  fill(0);
+  textSize(100);
+  text("SCORE", 100, 100);
+   int r = int(random(30,80));
+  int g = int(random(20,40));
+  int b = int(random(120,255));
+  fill(r,g,b);
+  text(score, 200,250);
+  
+  fill(0);
+  textSize(20);
+  text("Press S to restart",120,470);
+  text("Press Q to exit", 120, 490);
+  text("HIGH SCORE: " + highScore, 10,300); 
+  if(keyPressed && key == 's')
+  {
+   score = 0;
+   begin = millis();
+   time = 20;
+   duration = 10;
+   gameEnd = false;
+   gameRunning = true;
+  }
+  if(keyPressed && key == 'q')
+  {
+   score = 0;
+   time = 20;
+   duration = 10;
+   gameEnd = false;
+   gameRunning = false;
+   state = "select"; 
+  }
+
+ if(score > highScore)
+ {
+  highScore = score; 
+ }
 }
 
 void mouseClicked()
