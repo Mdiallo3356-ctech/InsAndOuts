@@ -362,7 +362,7 @@ void game()
    text("Press S to start game",20,250);
    
    textSize(20);
-   text("Press Q to quit", 200,400); 
+   text("Press Q to quit", 200,400);   
    if(keyPressed && key == 's')
    {
      begin = millis();
